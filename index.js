@@ -16,8 +16,8 @@ app.use(express.json());
 app.use(rootRoutes);
 
 
-const port = 3000;
+const port = 8080;
 
-app.listen((3000), () => {
+app.listen((port),'0.0.0.0',  () => {
     console.log(`Server is running on port: ${port}`);
 })
