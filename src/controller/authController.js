@@ -1,8 +1,7 @@
 import { createAccessToken } from "../config/jwt.js";
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import {PrismaClient} from '@prisma/client';
-import {send_response} from "../helper/send_response.js";
 import {handle_error} from "../helper/handle_error.js";
 
 dotenv.config();
