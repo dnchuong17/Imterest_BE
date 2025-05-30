@@ -36,7 +36,6 @@ const middlewareToken = async (req, res, next) => {
         return res.status(401).send({ error: 'Unauthorized' });
     }
 
-
     const userId = checkToken.payload.userId;
 
     const userExist = await user.findFirst({
