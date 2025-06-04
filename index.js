@@ -6,7 +6,12 @@ import cors from 'cors';
 const app = express();
 
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,  // Nếu bạn muốn gửi cookie hoặc token
+}));
 
 app.use(express.static("."));
 
