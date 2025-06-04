@@ -24,6 +24,7 @@
     "postgres": "^3.4.5"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.7.10",
     "prisma": "^6.8.2"
   }
 }
