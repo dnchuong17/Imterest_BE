@@ -1,6 +1,6 @@
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-3.0.x"]
+  binaryTargets = ["native", "debian-openssl-3.0.x", "windows"]
 }
 
 datasource db {
@@ -25,17 +25,19 @@ model Image {
   url       String
   creator   User         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
   creatorId String
+  isDeleted Boolean      @default(false)
   comments  Comment[]
   savedBy   SavedImage[]
 }
 
 model Comment {
-  id      String @id @default(uuid())
-  text    String
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
-  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
-  imageId String
+  id        String  @id @default(uuid())
+  text      String
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  image     Image   @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  imageId   String
+  isDeleted Boolean @default(false)
 }
 
 model SavedImage {
