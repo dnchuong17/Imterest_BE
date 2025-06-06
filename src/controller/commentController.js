@@ -30,7 +30,8 @@ const getComments = async (req,res) => {
         const id = req.params.imageId;
         const comments = await comment.findMany({
             where: {
-               imageId: id
+                imageId: id,
+                isDeleted: false
             },
             include: {
                 user: {
@@ -48,7 +49,24 @@ const getComments = async (req,res) => {
     }
 }
 
+const deleteComments = async (req,res) => {
+    try {
+        const id = req.params.commentId;
+        await comment.update({
+            where: {
+                id
+            },
+            data: { isDeleted: true },
+        });
+        return res.status(200).json({
+            message: "Comment deleted"
+        });
+    } catch (error) {
+        handle_error(error, res);
+    }
+}
 export {
     createComment,
-    getComments
+    getComments,
+    deleteComments,
 }

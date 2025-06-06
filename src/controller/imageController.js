@@ -8,7 +8,11 @@ const { image, user } = new PrismaClient({
 
 const getImages = async (req,res) => {
     try {
-        const result = await image.findMany();
+        const result = await image.findMany({
+            where: {
+                isDeleted: false
+            }
+        });
         send_response(req,res,"image", result);
     } catch (error) {
         handle_error(error, res);
@@ -72,11 +76,14 @@ const deleteImage = async (req, res) => {
     try {
         const id = req.params.id;
 
-        const result = await image.delete({
-            where: { id }
+        await image.update({
+            where: { id },
+            data: { isDeleted: true }
         });
 
-        res.send(result);
+        return res.status(200).json({
+            message: "Image deleted successfully!"
+        })
     } catch (error) {
         handle_error(error, res);
     }
@@ -87,7 +94,10 @@ const getImageByUserId = async (req, res) => {
         const userId = req.params.userId;
 
         const images = await image.findMany({
-            where: { creatorId: userId }
+            where: {
+                creatorId: userId,
+                isDeleted: false
+            }
         });
 
         send_response(req, res, "image", images);
